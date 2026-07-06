@@ -1,0 +1,123 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Item Display</title>
+    <script src="public/js/item-list.js"></script>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: white;
+        margin: 0;
+        padding: 0;
+      }
+      .main-container {
+        background-color: white;
+        width: 100%;
+        min-height: 100vh;
+        padding: 50px;
+        box-sizing: border-box;
+      }
+      h2 {
+        font-size: 36px;
+        margin-top: 0;
+        margin-bottom: 30px;
+      }
+      .select {
+        width: 320px;
+        height: 45px;
+        font-size: 22px;
+        padding-left: 15px;
+        margin-bottom: 15px;
+      }
+      hr {
+        border: none;
+        border-top: 2px solid #bdbdbd;
+        margin-bottom: 15px;
+      }
+      .prop-row {
+        display: grid;
+        grid-template-columns: 300px 1fr;
+        margin: 18px 0;
+        font-size: 26px;
+      }
+      .prop-name {
+        font-weight: bold;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="main-container">
+      <div>
+        <h2>Item Display</h2>
+      </div>
+      <div>
+        <select name="item-list" id="item-list" class="select"></select>
+      </div>
+      <hr />
+      <div class="prop-row">
+        <div class="prop-name">ID</div>
+        <div id="item-id"></div>
+      </div>
+      <div class="prop-row">
+        <div class="prop-name">Name</div>
+        <div id="item-name"></div>
+      </div>
+      <div class="prop-row">
+        <div class="prop-name">Category</div>
+        <div id="item-category"></div>
+      </div>
+      <div class="prop-row">
+        <div class="prop-name">Inventory Amt.</div>
+        <div id="item-inventory"></div>
+      </div>
+      <div class="prop-row">
+        <div class="prop-name">List price</div>
+        <div id="item-price"></div>
+      </div>
+    </div>
+    <script>
+      const itemList = document.getElementById("item-list");
+      const itemId = document.getElementById("item-id");
+      const itemName = document.getElementById("item-name");
+      const itemCategory = document.getElementById("item-category");
+      const itemInventory = document.getElementById("item-inventory");
+      const itemPrice = document.getElementById("item-price");
+      const emptyOption = document.createElement("option");
+      emptyOption.value = "";
+      emptyOption.textContent = "";
+      itemList.appendChild(emptyOption);
+      items.forEach(function (item) {
+        const option = document.createElement("option");
+        option.value = item.id;
+        option.textContent = item.name;
+        itemList.appendChild(option);
+      });
+      function clearData() {
+        itemId.textContent = "";
+        itemName.textContent = "";
+        itemCategory.textContent = "";
+        itemInventory.textContent = "";
+        itemPrice.textContent = "";
+      }
+      function displayItem(item) {
+        itemId.textContent = item.id;
+        itemName.textContent = item.name;
+        itemCategory.textContent = item.category;
+        itemInventory.textContent = item.inventory;
+        itemPrice.textContent = item.price;
+      }
+      itemList.addEventListener("change", function () {
+        const selectedId = itemList.value;
+        if (selectedId === "") {
+          clearData();
+          return;
+        }
+        const selectedItem = items.find(function (item) {
+          return item.id == selectedId;
+        });
+        displayItem(selectedItem);
+      });
+      clearData();
+    </script>
+  </body>
+</html>
